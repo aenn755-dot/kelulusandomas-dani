@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pengumuman Kelulusan SMK Indonesia Mas 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sekolah: '#0F52BA', // Biru
+                        sekolah2: '#FFD700', // Emas
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+        
+        .gradasi-bg {
+            background: linear-gradient(135deg, #0F52BA 0%, #1a73e8 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.2);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 min-h-screen flex items-center justify-center p-4 gradasi-bg">
+
+    <div class="w-full max-w-md">
+        <!-- Header Logo & Title -->
+        <div class="text-center mb-6 text-white">
+            <div class="bg-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-3 card-shadow">
+                <i class="fas fa-user-lock text-4xl text-sekolah"></i>
+            </div>
+            <h1 class="text-[clamp(1.5rem,5vw,2rem)] font-bold">LOGIN AKUN</h1>
+            <p class="text-blue-100">SMK Indonesia Mas 2 - Tahun Ajaran 2025/2026</p>
+        </div>
+
+        <!-- Card Login -->
+        <div class="bg-white rounded-2xl p-6 card-shadow">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Masuk ke Akun</h2>
+            <p class="text-gray-500 text-center text-sm mb-6">Masukkan Username dan NISN Anda</p>
+            
+            <form id="loginForm" onsubmit="return login()">
+                <div class="space-y-4">
+                    <!-- Username -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <div class="relative">
+                            <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="usernameInput" placeholder="Masukkan username" 
+                                class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sekolah focus:border-transparent outline-none transition input-focus" required>
+                        </div>
+                    </div>
+                    
+                    <!-- NISN -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">NISN</label>
+                        <div class="relative">
+                            <i class="fas fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="nisnInput" placeholder="Masukkan NISN (10 digit)" 
+                                maxlength="10"
+                                class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-sekolah focus:border-transparent outline-none transition input-focus" required>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Login -->
+                    <button type="submit" 
+                            class="w-full py-4 bg-sekolah hover:bg-blue-700 text-white font-bold rounded-xl text-lg transition transform hover:scale-[1.02] active:scale-95 shadow-lg mt-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i> LOGIN
+                    </button>
+                </div>
+            </form>
+
+            <!-- Pesan Error -->
+            <div id="errorMsg" class="mt-4 text-center text-red-500 text-sm hidden">
+                <i class="fas fa-exclamation-circle mr-1"></i>
+                <span id="errorText">Username atau NISN salah!</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <p class="text-center text-white/80 text-xs mt-6">
+            © 2026 SMK Indonesia Mas 2 - Sistem Informasi Akademik
+        </p>
+    </div>
+
+    <script>
+        function login() {
+    const username = document.getElementById('usernameInput').value.trim();
+    const nisn = document.getElementById('nisnInput').value.trim();
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Validasi panjang NISN
+    if(nisn.length !== 10) {
+        errorMsg.classList.remove('hidden');
+        document.getElementById('errorText').textContent = 'NISN harus 10 digit!';
+        return false;
+    }
+
+    // Simulasi proses login
+    const btn = event.target.querySelector('button');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> MEMPROSES...';
+    btn.disabled = true;
+
+    setTimeout(() => {
+        // DATA YANG BENAR
+        const validUser = {
+            username: "Dani",
+            nisn: "0078505474"
+        };
+
+        if(username === validUser.username && nisn === validUser.nisn) {
+            // 👇 INI YANG DIUBAH: Langsung masuk ke Dashboard
+            window.location.href = "dashboard.html"; 
+        } else {
+            // Jika salah
+            errorMsg.classList.remove('hidden');
+            document.getElementById('errorText').textContent = 'Username atau NISN tidak cocok!';
+            btn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> LOGIN';
+            btn.disabled = false;
+        }
+    }, 1500);
+
+    return false;
+}
+    </script>
+</body>
+</html>
